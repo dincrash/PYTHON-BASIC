@@ -16,4 +16,18 @@ from typing import Iterable
 
 
 def build_from_unique_words(*lines: Iterable[str], word_number: int) -> str:
-    ...
+    output = ""
+    for c in iter(lines):
+        words = c.split()
+        c = (" ".join(sorted(set(words), key=words.index)))
+        N = word_number
+        if(N<(len(c.split(' ')))):
+            res = c.split(' ')[N]
+            output = output + " " + res
+    print(output)
+
+
+build_from_unique_words('a b c', '1 1 1 2 3', 'cat dog milk', word_number=1)
+build_from_unique_words('a b c', '', 'cat dog milk', word_number=0)
+build_from_unique_words('1 2', '1 2 3', word_number=10)
+build_from_unique_words(word_number=10)

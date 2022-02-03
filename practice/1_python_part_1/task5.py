@@ -13,4 +13,9 @@ Examples:
 
 
 def remove_duplicated_words(line: str) -> str:
-    ...
+    words = line.split()
+    c = (" ".join(sorted(set(words), key=line.index)))
+    print(c)
+remove_duplicated_words('cat cat dog 1 dog 2')
+remove_duplicated_words('cat cat cat')
+remove_duplicated_words('1 2 3')
