@@ -35,22 +35,29 @@ class Teacher:
     def create_homework(self,text,deadline):
         self.text = text
         self.deadline = deadline
-        return Homework
+        return Homework(text,deadline)
 
 class Student:
     def __init__(self,last_name,first_name):
         self.last_name = last_name
         self.first_name = first_name
-    def do_homework():
-        print()
+    def do_homework(self,homework):
+        if(homework.is_active()):
+            print("You are late")
+            return None
+        
 
 class Homework:
     def __init__(self,text,deadline):
         self.text = text
         self.deadline = deadline
-        print(self)
-    def is_active():
-        print()
+        self.created=datetime.datetime.now()
+    def is_active(self):
+        a = datetime.datetime.now() - datetime.timedelta(days=3)
+        b = datetime.datetime.now() - datetime.timedelta(days=self.deadline)
+        if((a-b).days >=0):
+            return True
+        
 
 if __name__ == '__main__':
     teacher = Teacher('Dmitry', 'Orlyakov')
@@ -59,17 +66,14 @@ if __name__ == '__main__':
     student.first_name  # Petrov
 
     expired_homework = teacher.create_homework('Learn functions', 0)
-    print(expired_homework.text)  # 'Learn functions'
-
-
-
-    #expired_homework.deadline  # 0:00:00
-    #expired_homework.created  # Example: 2019-05-26 16:44:30.688762
-
+    expired_homework.text  # 'Learn functions'
+    expired_homework.deadline  # 0:00:00
+    expired_homework.created  # Example: 2019-05-26 16:44:30.688762
+    
     # create function from method and use it
-   # create_homework_too = teacher.create_homework
-   # oop_homework = create_homework_too('create 2 simple classes', 5)
-   # oop_homework.deadline  # 5 days, 0:00:00
+    create_homework_too = teacher.create_homework
+    oop_homework = create_homework_too('create 2 simple classes', 5)
+    oop_homework.deadline  # 5 days, 0:00:00
 
-    #student.do_homework(oop_homework)
-    #student.do_homework(expired_homework)  # You are late   
+    student.do_homework(oop_homework)
+    student.do_homework(expired_homework)  # You are late   
