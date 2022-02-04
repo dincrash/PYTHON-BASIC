@@ -13,11 +13,16 @@ Examples:
     user enters: hello, world, foo, bar, baz
     >>> read_numbers(5)
     No numbers entered
-
 """
 
 
 def read_numbers(n: int) -> str:
-    ...
-
+    s = input()
+    #s="1 2 hello 2 world"
+    s = (' '.join(word for word in s.split() if word.isdigit())).split()
+    if(len(s)>1):
+        print(f'Avg: {(sum(map(int,s))/len(s)):.2f}')
+    else:
+        print("No numbers entered")
+read_numbers(5)
 
