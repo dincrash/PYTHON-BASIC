@@ -12,13 +12,25 @@ Example:
 """
 
 
-def generate_words(n=20):
+def generate_words(n):
     import string
     import random
-
     words = list()
     for _ in range(n):
         word = ''.join(random.choices(string.ascii_lowercase, k=random.randint(3, 10)))
         words.append(word)
 
     return words
+
+def write_to_file():
+    text=generate_words(5)
+    with open('file1.txt', 'w', encoding='utf-8') as f:
+        for t in text:
+           f.write((t + "\n"))
+        f.close()
+    with open('file2.txt', 'w', encoding='CP1252') as f:
+        for t in text:
+           f.write((t + ","))
+        f.close()
+
+write_to_file()
