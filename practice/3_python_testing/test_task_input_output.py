@@ -11,12 +11,25 @@ https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch
 
 TIP: for testing builtin input() function create another function which return input() and mock returned value
 """
+import unittest
 from unittest.mock import patch
 
 
-def test_read_numbers_without_text_input():
-    ...
+class Test(unittest.TestCase):
+
+    def test_read_numbers_without_text_input(self):
+        s = "1 2 hello 2 world"
+        d = "['1', '2', '2']"
+        self.assertTrue(d == str(number_input(s)))
+
+    @patch('builtins.input', side_effect=['1 2 hello 2 world'])
+    def test_read_numbers_with_text_input(self, mock_input):
+        calling_1 = mock_input()
+        calling_1 = (' '.join(word for word in calling_1.split() if word.isdigit())).split()
+        self.assertTrue(str(calling_1) == "['1', '2', '2']")
 
 
-def test_read_numbers_with_text_input():
-    ...
+def number_input(s):
+    # s="1 2 hello 2 world"
+    s = (' '.join(word for word in s.split() if word.isdigit())).split()
+    return s

@@ -24,5 +24,4 @@ def read_numbers(n: int) -> str:
         print(f'Avg: {(sum(map(int,s))/len(s)):.2f}')
     else:
         print("No numbers entered")
-read_numbers(5)
 
