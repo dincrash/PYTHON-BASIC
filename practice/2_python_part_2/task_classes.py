@@ -53,6 +53,8 @@ class Homework:
         self.deadline = deadline
         self.created=datetime.datetime.now()
     def is_active(self):
+        if(self.deadline < 0):
+            return True
         a = datetime.datetime.now() - datetime.timedelta(days=3)
         b = datetime.datetime.now() - datetime.timedelta(days=self.deadline)
         if((a-b).days >=0):
