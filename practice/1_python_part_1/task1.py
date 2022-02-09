@@ -15,10 +15,14 @@ from typing import List, Any
 
 
 def delete_from_list(list_to_clean: List, item_to_delete: Any) -> List:
-        print([s for s in list_to_clean if s != item_to_delete])
+    """
+    delete_from_list
+    """
+    return [s for s in list_to_clean if s != item_to_delete]
 
-delete_from_list([1,2,3,4],3)
-delete_from_list([1,2,3],4)
-delete_from_list([1,2,3],'b')
+
+delete_from_list([1, 2, 3, 4], 3)
+delete_from_list([1, 2, 3], 4)
+delete_from_list([1, 2, 3], 'b')
 delete_from_list([], 'b')
 delete_from_list(['a', 'b', 'c', 'b', 'd'], 'b')
