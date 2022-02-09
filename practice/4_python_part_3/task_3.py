@@ -21,8 +21,7 @@ def is_http_domain(domain: str) -> bool:
     if len(url) > 0:
         if str(url[0]) == 'http':
             return True
-    else:
-        return False
+    return False
 
 
 # is_http_domain('http://wikipedia.org')
@@ -35,4 +34,4 @@ write tests for is_http_domain function
 
 @pytest.mark.parametrize("a", ['http://wikipedia.org', 'https://ru.wikipedia.org/', 'griddynamics.com'])
 def test_is_http_domain(a):
-    assert (True == is_http_domain(a))
+    assert is_http_domain(a) is True

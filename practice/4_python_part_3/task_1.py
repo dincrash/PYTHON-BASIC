@@ -22,8 +22,7 @@ def calculate_days(from_date: str) -> int:
         d2 = datetime.now()
         if d2 < d1:
             return -(abs((d1 - d2).days))
-        else:
-            return abs((d2 - d1).days)
+        return abs((d2 - d1).days)
     except ValueError:
         print("WrongFormatException")
 

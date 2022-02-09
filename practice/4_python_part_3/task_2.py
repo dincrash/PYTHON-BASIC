@@ -15,10 +15,9 @@ import math
 def math_calculate(function: str, *args):
     if function == 'log':
         return log(*args)
-    elif function == 'ceil':
+    if function == 'ceil':
         return ceil(*args)
-    else:
-        return "OperationNotFoundException"
+    return "OperationNotFoundException"
 
 
 def log(*args):
