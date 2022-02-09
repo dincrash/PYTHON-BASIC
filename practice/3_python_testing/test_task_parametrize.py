@@ -28,9 +28,9 @@ def fibonacci_2(n):
 
 @pytest.mark.parametrize("a, expected_result", [(6, 8), (30, 832040), (45, 1134903170)])
 def test_fibonacci_1(a, expected_result):
-    assert (expected_result == fibonacci_1(a))
+    assert expected_result == fibonacci_1(a)
 
 
 @pytest.mark.parametrize("a, expected_result", [(6, 8), (30, 832040), (45, 1134903170)])
 def test_fibonacci_2(a, expected_result):
-    assert (expected_result == fibonacci_2(a))
+    assert expected_result == fibonacci_2(a)
