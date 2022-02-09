@@ -21,7 +21,7 @@ def build_from_unique_words(*lines: Iterable[str], word_number: int) -> str:
         words = c.split()
         c = (" ".join(sorted(set(words), key=words.index)))
         N = word_number
-        if(N<(len(c.split(' ')))):
+        if N < (len(c.split(' '))):
             res = c.split(' ')[N]
             output = output + " " + res
     print(output)

@@ -18,9 +18,9 @@ from unittest.mock import patch
 class Test(unittest.TestCase):
 
     def test_read_numbers_without_text_input(self):
-        s = "1 2 hello 2 world"
-        d = "['1', '2', '2']"
-        self.assertTrue(d == str(number_input(s)))
+        string_input = "1 2 hello 2 world"
+        string_output = "['1', '2', '2']"
+        self.assertTrue(string_output == str(number_input(string_input)))
 
     @patch('builtins.input', side_effect=['1 2 hello 2 world'])
     def test_read_numbers_with_text_input(self, mock_input):

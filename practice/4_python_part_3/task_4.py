@@ -18,9 +18,10 @@ import argparse
 
 
 def print_name_address(args: argparse.Namespace) -> None:
-    ...
+    dc = args.parse_args()
+    print(dc)
 
-
+print_name_address('dqwq')
 """
 Write test for print_name_address function
 Use Mock for mocking args argument https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock

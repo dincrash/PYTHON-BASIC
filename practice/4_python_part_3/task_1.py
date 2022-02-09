@@ -25,7 +25,7 @@ def calculate_days(from_date: str) -> int:
         else:
             return abs((d2 - d1).days)
     except ValueError:
-        print(("WrongFormatException"))
+        print("WrongFormatException")
 
 
 calculate_days('2021-10-07')
@@ -37,6 +37,7 @@ Note that all tests should pass regardless of the day test was run
 Tip: for mocking datetime.now() use https://pypi.org/project/pytest-freezegun/
 """
 
+
 @pytest.fixture
 def current_date():
     return date.today()
@@ -44,12 +45,13 @@ def current_date():
 
 @pytest.mark.freeze_time
 def test_changing_date(current_date, freezer):
-    calc = ((current_date - date(2021, 10, 7)).days)
+    calc = (current_date - date(2021, 10, 7)).days
     calc2 = calculate_days('2021-10-07')
     assert calc == calc2
 
+
 @pytest.mark.freeze_time
 def test_changing_not_correct_date(current_date, freezer):
-    calc = ((current_date - date(2020, 10, 7)).days)
+    calc = (current_date - date(2020, 10, 7)).days
     calc2 = calculate_days('2021-10-07')
     assert calc == calc2

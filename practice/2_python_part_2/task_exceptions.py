@@ -19,17 +19,16 @@ import typing
 
 def division(x: int, y: int) -> typing.Union[None, int]:
     try:
-        if (y == 0):
+        if y == 0:
             print("Division by 0")
             return None
-        elif (y == 1):
+        elif y == 1:
             raise DivisionByOneException
         else:
             print(int(x / y))
             print("Division finished")
     except DivisionByOneException:
         print('DivisionByOneException("Deletion on 1 get the same result")')
-
 
 
 class DivisionByOneException(Exception):
