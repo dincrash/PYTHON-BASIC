@@ -21,6 +21,5 @@ def read_numbers(n: int) -> str:
     # s="1 2 hello 2 world"
     s = (' '.join(word for word in s.split() if word.isdigit())).split()
     if len(s) > 1:
-        print(f'Avg: {(sum(map(int, s)) / len(s)):.2f}')
-    else:
-        print("No numbers entered")
+        return f'Avg: {(sum(map(int, s)) / len(s)):.2f}'
+    return "No numbers entered"

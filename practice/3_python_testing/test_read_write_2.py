@@ -6,9 +6,9 @@ https://docs.pytest.org/en/6.2.x/tmpdir.html
 """
 import sys
 import os
-import task_read_write_2
 
 sys.path.append('../2_python_part_2')
+import task_read_write_2
 
 
 def test_create_file(tmp_path):

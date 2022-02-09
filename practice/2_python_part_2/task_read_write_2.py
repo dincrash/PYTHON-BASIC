@@ -10,12 +10,12 @@ Example:
         file1.txt (content: "abc\ndef\nxyz", encoding: UTF-8)
         file2.txt (content: "xyz,def,abc", encoding: CP1252)
 """
+import string
+import random
 
 
 def generate_words(n):
-    import string
-    import random
-    words = list()
+    words = []
     for _ in range(n):
         word = ''.join(random.choices(string.ascii_lowercase, k=random.randint(3, 10)))
         words.append(word)
@@ -34,4 +34,3 @@ def write_to_file(tmp_path1, tmp_path2):
         for t in text:
             f.write((t + ","))
         f.close()
-

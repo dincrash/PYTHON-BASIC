@@ -7,9 +7,9 @@ https://docs.pytest.org/en/6.2.x/tmpdir.html
 
 import sys
 import os
-import task_read_write
 
 sys.path.append('../2_python_part_2')
+import task_read_write
 
 
 def test_create_file(tmp_path):
@@ -17,4 +17,4 @@ def test_create_file(tmp_path):
     d.mkdir()
     p = d / "result.txt"
     task_read_write.read_write(p)
-    assert (os.path.exists(p))
+    assert os.path.exists(p)

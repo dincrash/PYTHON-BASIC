@@ -17,10 +17,10 @@ import os
 
 
 def read_write(tmp_path):
-    mylist = list()
+    mylist = []
     text = ""
     for filename in os.listdir("../2_python_part_2/files"):
-        with open(os.path.join("../2_python_part_2/files", filename), 'r') as f:  # open in readonly mode
+        with open(os.path.join("../2_python_part_2/files", filename), 'r', encoding='CP1252') as f:  # open in readonly mode
             text = text + f'{f.read()} '
             mylist.append(str(text))
     print(text)
