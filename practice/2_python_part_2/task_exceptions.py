@@ -23,13 +23,13 @@ def division(x: int, y: int) -> typing.Union[None, int]:
         if y == 0:
             print("Division by 0")
             return None
-        elif y == 1:
+        if y == 1:
             raise DivisionByOneException
-        else:
-            print("Division finished")
-            return int(x / y)
+        print("Division finished")
+        return int(x / y)
     except DivisionByOneException:
-        return print('DivisionByOneException("Deletion on 1 get the same result")')
+        print('DivisionByOneException("Deletion on 1 get the same result")')
+        return None
 
 
 class DivisionByOneException(Exception):

@@ -12,22 +12,22 @@ import task_classes
 def test_Teacher():
     tc_teacher = task_classes.Teacher("daniil", "test")
     cr_homework = tc_teacher.create_homework("test", 2)
-    assert ("test" == cr_homework.text)
-    assert (2 == cr_homework.deadline)
+    assert "test" == cr_homework.text
+    assert 2 == cr_homework.deadline
 
 
 def test_Student():
     tc_student = task_classes.Student("daniil", "test")
     tc_teacher = task_classes.Teacher("daniil", "test")
     expired_homework = tc_teacher.create_homework('Learn functions', 0)
-    assert (tc_student.do_homework(expired_homework) is None)
+    assert tc_student.do_homework(expired_homework) is None
 
 
 def test_Negative_Number():
     hw = task_classes.Homework('Learn functions', 10)
-    assert (hw.is_active() == False)
+    assert hw.is_active() == False
 
 
 def test_Negative_Number():
     hw = task_classes.Homework('Learn functions', -5)
-    assert (hw.is_active() == False)
+    assert hw.is_active() == False
