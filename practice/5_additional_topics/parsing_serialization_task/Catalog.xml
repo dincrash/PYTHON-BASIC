@@ -1,1 +1,7 @@
-<Catalog><cities><Barcelona>24.21</Barcelona></cities></Catalog>
+<weather country="Spain" date="2021-09-25">
+    <summary/>
+    <cities>
+        <Barcelona mean_temp="24.21" mean_wind_speed="1.26" min_temp="21.66" min_wind_speed="0.45" max_temp="27.38"
+                   max_wind_speed="3.60"/>
+    </cities>
+</weather>
