@@ -26,7 +26,7 @@ class Thingy:
     def __init__(self, name):
         self.name = name
 
-    def print_name_address(parser: argparse.Namespace) -> None:
+    def print_name_address(self, parser: argparse.Namespace) -> None:
 
         parser.add_argument('integers', metavar='N', type=int)
         parser.add_argument('--fake-address', type=str)
@@ -67,6 +67,7 @@ Example:
 """
 
 
-class TestThingys(unittest.TestCase):
-    def test_parser(self):
-        pass
+def test_parser():
+    m = Mock()
+    m.Thingy.print_name_address = 123
+    m.Thingy.print_name_address()
