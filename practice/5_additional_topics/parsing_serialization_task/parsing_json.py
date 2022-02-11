@@ -10,7 +10,8 @@ def GenerateXML(fileName, mylist):
     m1 = gfg.Element("cities")
     root.append(m1)
     for i in mylist:
-        b1 = gfg.SubElement(m1, i[0], mean_temp=i[1], mean_wind_speed=i[2], min_temp=i[3], min_wind_speed=i[4], max_temp=i[5],
+        b1 = gfg.SubElement(m1, i[0], mean_temp=i[1], mean_wind_speed=i[2], min_temp=i[3], min_wind_speed=i[4],
+                            max_temp=i[5],
                             max_wind_speed=i[6])
 
     tree = gfg.ElementTree(root)
@@ -19,14 +20,15 @@ def GenerateXML(fileName, mylist):
         tree.write(files)
 
 
-def read_files():
+def main():
     mylist = []
-    text = ""
+    summary = []
+    aa=0
     for i in os.scandir("../parsing_serialization_task/source_data"):
-        # print(i.name)
         path = "../parsing_serialization_task/source_data/" + i.name
         path = path + "/2021_09_25.json"
         name = i.name
+        name = name.replace(" ", "-")
         json1_file = open(path)
         json1_str = json1_file.read()
         json1_data = json.loads(json1_str)
@@ -47,10 +49,13 @@ def read_files():
         d = f'{min(all_wind):.2f}'
         e = f'{max(all_temp):.2f}'
         f = f'{max(all_wind):.2f}'
+        summary.append([float(a)])
+
         mylist.append([name, a, b, c, d, e, f])
-    print(mylist)
-    GenerateXML("Catalog.xml", mylist)
+    #summary.append([aa])
+    print(f'{sum(summary) / len (summary):.2f}')
+    GenerateXML("result.xml", mylist)
 
 
 if __name__ == "__main__":
-    read_files()
+    main()
