@@ -15,13 +15,47 @@ Example:
 """
 
 import argparse
+import unittest
+from unittest import mock
+from unittest.mock import Mock
+import sys
+from faker import Faker
 
 
-def print_name_address(args: argparse.Namespace) -> None:
-    dc = args.parse_args()
-    print(dc)
+class Thingy:
+    def __init__(self, name):
+        self.name = name
 
-print_name_address('dqwq')
+    def print_name_address(parser: argparse.Namespace) -> None:
+
+        parser.add_argument('integers', metavar='N', type=int)
+        parser.add_argument('--fake-address', type=str)
+        parser.add_argument('--some_name', type=str)
+        args = parser.parse_args()
+
+        fake = Faker()
+        fake.name()
+        fake.address()
+
+        mydict = vars(args)
+        mydict1 = {}
+        for _ in range(args.integers):
+            for arg in mydict:
+                if getattr(args, arg) == "address":
+                    mydict1[arg] = fake.address()
+                if getattr(args, arg) == "name":
+                    mydict1[arg] = fake.name()
+            print(mydict1)
+
+
+def main():
+    pars = argparse.ArgumentParser()
+    Thingy.print_name_address(pars)
+
+
+if __name__ == '__main__':
+    main()
+
 """
 Write test for print_name_address function
 Use Mock for mocking args argument https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock
@@ -31,3 +65,8 @@ Example:
     >>> m.method()
     123
 """
+
+
+class TestThingys(unittest.TestCase):
+    def test_parser(self):
+        pass
