@@ -5,13 +5,16 @@ Examples:
      >>> make_request('https://www.google.com')
      200, 'response data'
 """
+import urllib.request
 from typing import Tuple
 
 
 def make_request(url: str) -> Tuple[int, str]:
-    ...
+    urlcode = urllib.request.urlopen(url)
+    return urlcode.getcode(), urlcode.read().decode('utf8')
 
 
+make_request("https://www.google.com")
 """
 Write test for make_request function
 Use Mock for mocking request with urlopen https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock
