@@ -66,7 +66,9 @@ Example:
 
 def test_parser():
     m = Mock()
-    args = [4, '--fake-address=address', '--some_name=name']
-    print(m.Thingy.print_name_address(args))
-    m.Thingy.print_name_address(args).assert_called()
+    #args = [4, '--fake-address=address', '--some_name=name']
+    #print(m.Thingy.print_name_address(args))
+    #m.Thingy.print_name_address(args).assert_called()
+    m.Thingy.print_name_address(4, '--fake-address=address', '--some_name=name')
+    m.Thingy.print_name_address.assert_called_with(4, '--fake-address=address', '--some_name=name')
 
