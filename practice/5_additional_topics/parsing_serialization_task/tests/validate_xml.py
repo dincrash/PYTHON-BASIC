@@ -25,7 +25,7 @@ def check_result(xml_path: str):
             summary = child.attrib
 
         if child.tag == 'cities':
-            assert len([c for c in child]) == 17, f"Invalid number of cities in XML: {len([c for c in child])}"
+            assert len([c for c in child]) == 6, f"Invalid number of cities in XML: {len([c for c in child])}"
             cities_summary = {}
             for city in child:
                 city_attribs = {'mean_temp', 'mean_wind_speed',
@@ -50,17 +50,17 @@ def check_result(xml_path: str):
     mean_temp = round(mean([float(values['mean_temp']) for city, values in cities_summary.items()]), 2)
     assert float(summary['mean_temp']) == mean_temp, "Incorrect mean temperature in summary."
 
-    assert summary.get('warmest_place') == 'Palma', \
+    assert summary.get('warmest_place') == 'Brest', \
         "The warmest place is incorrect"
     assert max(cities_summary.items(), key=lambda item: float(item[1].get('mean_temp')))[0] == summary.get('warmest_place'), \
         "The warmest place is incorrect. You need to find city with maximum mean temperature"
 
-    assert summary.get('coldest_place') == 'Valladolid', \
+    assert summary.get('coldest_place') == 'Vitebsk', \
         "The coldest place is incorrect"
     assert min(cities_summary.items(), key=lambda item: float(item[1].get('mean_temp')))[0] == summary.get('coldest_place'), \
         "The coldest place is incorrect. You need to find city with minimum mean temperature"
 
-    assert summary.get('windiest_place') == 'Pamplona', \
+    assert summary.get('windiest_place') == 'Grodno', \
         "The windiest place is incorrect"
     assert max(cities_summary.items(), key=lambda item: float(item[1].get('mean_wind_speed')))[0] == summary.get('windiest_place'), \
         "The coldest place is incorrect. You need to find city with maximum wind speed"
