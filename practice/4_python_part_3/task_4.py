@@ -15,10 +15,7 @@ Example:
 """
 
 import argparse
-import unittest
-from unittest import mock
 from unittest.mock import Mock
-import sys
 from faker import Faker
 
 
@@ -69,5 +66,5 @@ Example:
 
 def test_parser():
     m = Mock()
-    m.Thingy.print_name_address = 123
-    m.Thingy.print_name_address()
+    m.Thingy.print_name_address = [4, '--fake-address=address', '--some_name=name']
+    m.Thingy.print_name_address().assert_called()
