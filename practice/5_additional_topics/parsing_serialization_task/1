@@ -1,0 +1,4 @@
+,
+                     coldest_place=allsummary[2],
+                     warmest_place=allsummary[3],
+                     windiest_place=allsummary[4]

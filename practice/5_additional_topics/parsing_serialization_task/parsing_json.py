@@ -1,14 +1,38 @@
 import json
 import os
 import xml.etree.ElementTree as gfg
+from typing import Dict
 
 
 def GenerateXML(fileName, mylist):
     root = gfg.Element("weather", country="Spain", date="2021-09-25")
-    m2 = gfg.Element("summary")
+    summary = []
+    allsummary = []
+    b = 0
+    c = 1
+
+    while c < 3:
+        while b < (len(mylist) - 1):
+            b = b + 1
+            summary.append(float(mylist[b][c]))
+        allsummary.append(f'{(sum(summary) / len(mylist)):.2f}')
+        summary.clear()
+        b = 0
+        c = c + 1
+
+    b = 0
+    coldest = []
+    while b < (len(mylist) - 1):
+        print(b)
+        coldest.append(mylist[b][3])
+        b = b + 1
+    print(coldest)
+
+    m2 = gfg.Element("summary", mean_temp=allsummary[0], mean_wind_speed=allsummary[1])
     root.append(m2)
     m1 = gfg.Element("cities")
     root.append(m1)
+
     for i in mylist:
         b1 = gfg.SubElement(m1, i[0], mean_temp=i[1], mean_wind_speed=i[2], min_temp=i[3], min_wind_speed=i[4],
                             max_temp=i[5],
@@ -22,8 +46,6 @@ def GenerateXML(fileName, mylist):
 
 def main():
     mylist = []
-    summary = []
-    aa=0
     for i in os.scandir("../parsing_serialization_task/source_data"):
         path = "../parsing_serialization_task/source_data/" + i.name
         path = path + "/2021_09_25.json"
@@ -49,12 +71,16 @@ def main():
         d = f'{min(all_wind):.2f}'
         e = f'{max(all_temp):.2f}'
         f = f'{max(all_wind):.2f}'
-        summary.append([float(a)])
 
         mylist.append([name, a, b, c, d, e, f])
-    #summary.append([aa])
-    print(f'{sum(summary) / len (summary):.2f}')
+
     GenerateXML("result.xml", mylist)
+
+
+def summarycity(list) -> Dict:
+    result = []
+    result.append(f'{(sum(list) / len(list)):.2f}')
+    return result
 
 
 if __name__ == "__main__":
