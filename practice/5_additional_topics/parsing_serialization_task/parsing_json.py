@@ -23,12 +23,36 @@ def GenerateXML(fileName, mylist):
     b = 0
     coldest = []
     while b < (len(mylist) - 1):
-        print(b)
         coldest.append(mylist[b][3])
         b = b + 1
-    print(coldest)
+    i = (min(coldest))
+    # print(mylist[3])
+    cold = list(coldest)
+    allsummary.append(mylist[cold.index(min(coldest))][0])
+    b = 0
+    warmest = []
+    while b < (len(mylist) - 1):
+        warmest.append(mylist[b][5])
+        b = b + 1
+    i = (max(warmest))
+    # print(mylist[3])
+    warm = list(warmest)
+    allsummary.append(mylist[warm.index(max(warmest))][0])
 
-    m2 = gfg.Element("summary", mean_temp=allsummary[0], mean_wind_speed=allsummary[1])
+    windest = []
+    b = 0
+    while b < (len(mylist) - 1):
+        windest.append(mylist[b][6])
+        b = b + 1
+    i = (max(windest))
+    # print(mylist[3])
+    wind = list(windest)
+    allsummary.append(mylist[wind.index(max(windest))][0])
+
+    m2 = gfg.Element("summary", mean_temp=allsummary[0], mean_wind_speed=allsummary[1],
+                     coldest_place=allsummary[2],
+                     warmest_place=allsummary[3],
+                     windiest_place=allsummary[4])
     root.append(m2)
     m1 = gfg.Element("cities")
     root.append(m1)

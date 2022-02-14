@@ -1,6 +1,6 @@
 <weather country="Spain" date="2021-09-25">
-    <summary mean_temp="19.43" mean_wind_speed="2.02" min_temp="16.37" min_wind_speed="0.53" max_temp="23.47"
-             max_wind_speed="5.07"/>
+    <summary mean_temp="19.43" mean_wind_speed="2.02" coldest_place="Valladolid" warmest_place="Palma"
+             windiest_place="Pamplona"/>
     <cities>
         <Oviedo mean_temp="17.00" mean_wind_speed="1.54" min_temp="14.26" min_wind_speed="0.17" max_temp="21.96"
                 max_wind_speed="6.26"/>
