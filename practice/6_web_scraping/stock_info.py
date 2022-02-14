@@ -32,3 +32,41 @@ Links:
     - lxml docs: https://lxml.de/
 """
 
+# -*- coding: utf-8 -*-
+from bs4 import BeautifulSoup
+import requests
+
+url = 'https://finance.yahoo.com/most-active'
+header = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
+}
+response = requests.get(url, headers=header)
+soup = BeautifulSoup(response.content, 'lxml')
+liststock = []
+listname = []
+for item in soup.select('.simpTblRow'):
+    liststock.append(item.select('[aria-label=Symbol]')[0].get_text())
+    listname.append(item.select('[aria-label=Name]')[0].get_text())
+
+b = 0
+output = []
+while b <= (len(liststock) - 1):
+    output.append(liststock[b])
+    output.append(listname[b])
+    url = 'https://finance.yahoo.com/quote/' + liststock[b] + '/profile?p=' + liststock[b]
+    response = requests.get(url, headers=header)
+    html_soup = BeautifulSoup(response.text, 'html.parser')
+    first = html_soup.find_all('div', class_='Mb(25px)')
+    fo = html_soup.find_all('p', class_='D(ib) W(47.727%) Pend(40px)')
+    for i in fo:
+        output.append(i.contents[4])
+    fo = html_soup.find_all('p', class_='D(ib) Va(t)')
+    for i in fo:
+        output.append(i.contents[10].get_text())
+    response = requests.get(url, headers=header)
+    soup = BeautifulSoup(response.content, 'lxml')
+    output.append(soup.select('[class="Ta(start)"]')[0].get_text())
+    output.append(soup.select('[class="Ta(end)"]')[2].get_text())
+    print(output)
+    b = b + 1
+    output.clear()
