@@ -32,41 +32,64 @@ Links:
     - lxml docs: https://lxml.de/
 """
 
-# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import requests
+from prettytable import PrettyTable
 
-url = 'https://finance.yahoo.com/most-active'
-header = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
-}
-response = requests.get(url, headers=header)
-soup = BeautifulSoup(response.content, 'lxml')
-liststock = []
-listname = []
-for item in soup.select('.simpTblRow'):
-    liststock.append(item.select('[aria-label=Symbol]')[0].get_text())
-    listname.append(item.select('[aria-label=Name]')[0].get_text())
 
-b = 0
-output = []
-while b <= (len(liststock) - 1):
-    output.append(liststock[b])
-    output.append(listname[b])
-    url = 'https://finance.yahoo.com/quote/' + liststock[b] + '/profile?p=' + liststock[b]
-    response = requests.get(url, headers=header)
-    html_soup = BeautifulSoup(response.text, 'html.parser')
-    first = html_soup.find_all('div', class_='Mb(25px)')
-    fo = html_soup.find_all('p', class_='D(ib) W(47.727%) Pend(40px)')
-    for i in fo:
-        output.append(i.contents[4])
-    fo = html_soup.find_all('p', class_='D(ib) Va(t)')
-    for i in fo:
-        output.append(i.contents[10].get_text())
+def youngestceo():
+    url = 'https://finance.yahoo.com/most-active'
+    header = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
+    }
     response = requests.get(url, headers=header)
     soup = BeautifulSoup(response.content, 'lxml')
-    output.append(soup.select('[class="Ta(start)"]')[0].get_text())
-    output.append(soup.select('[class="Ta(end)"]')[2].get_text())
-    print(output)
-    b = b + 1
-    output.clear()
+    liststock = []
+    listname = []
+    for item in soup.select('.simpTblRow'):
+        liststock.append(item.select('[aria-label=Symbol]')[0].get_text())
+        listname.append(item.select('[aria-label=Name]')[0].get_text())
+
+    b = 0
+    output = {"Code": [], "Name": [], "Country": [], "Employees": [], "CEO": [], "Age": []}
+    out = []
+
+    while b <= (len(liststock) - 1):
+
+        output["Code"].append(liststock[b])
+        output["Name"].append(listname[b])
+        url = 'https://finance.yahoo.com/quote/' + liststock[b] + '/profile?p=' + liststock[b]
+        response = requests.get(url, headers=header)
+        html_soup = BeautifulSoup(response.text, 'html.parser')
+        first = html_soup.find_all('div', class_='Mb(25px)')
+        fo = html_soup.find_all('p', class_='D(ib) W(47.727%) Pend(40px)')
+        for i in fo:
+            output["Country"].append(i.contents[4])
+        fo = html_soup.find_all('p', class_='D(ib) Va(t)')
+        for i in fo:
+            output["Employees"].append(i.contents[10].get_text())
+        response = requests.get(url, headers=header)
+        soup = BeautifulSoup(response.content, 'lxml')
+        output["CEO"].append(soup.select('[class="Ta(start)"]')[0].get_text())
+        output["Age"].append(soup.select('[class="Ta(end)"]')[2].get_text())
+        out.append(output.copy())
+        output = {"Code": [], "Name": [], "Country": [], "Employees": [], "CEO": [], "Age": []}
+        b = b + 1
+    newout = sorted(out, key=lambda d: d['Age'])
+    i = 0
+    while i < (len(out) - 5):
+        del newout[0]
+        i = i + 1
+    print("==================================== 5 stocks with most youngest CEOs ===================================")
+
+    t = PrettyTable(['Name', 'Code', 'Country', 'Employees', 'CEO', 'Age'])
+    for i in newout:
+        t.add_row(
+            [str(i['Name']), str(i['Code']), str(i['Country']), str(i['Employees']), str(i['CEO']), str(i['Age'])])
+    print(t)
+def bestchange():
+    pass
+# 5 stocks with most youngest CEOs
+# youngestceo()
+# 10 stocks with best 52-Week Change
+bestchange()
