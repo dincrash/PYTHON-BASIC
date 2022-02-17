@@ -39,30 +39,19 @@ from prettytable import PrettyTable
 
 
 def youngestceo():
-    url = 'https://finance.yahoo.com/most-active'
-    header = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
-    }
-    response = requests.get(url, headers=header)
-    soup = BeautifulSoup(response.content, 'lxml')
-    liststock = []
-    listname = []
-    for item in soup.select('.simpTblRow'):
-        liststock.append(item.select('[aria-label=Symbol]')[0].get_text())
-        listname.append(item.select('[aria-label=Name]')[0].get_text())
-
     b = 0
     output = {"Code": [], "Name": [], "Country": [], "Employees": [], "CEO": [], "Age": []}
     out = []
-
+    liststock = []
+    listname = []
+    header = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
+    }
+    liststockname(liststock, listname, header)
     while b <= (len(liststock) - 1):
-
-        output["Code"].append(liststock[b])
-        output["Name"].append(listname[b])
         url = 'https://finance.yahoo.com/quote/' + liststock[b] + '/profile?p=' + liststock[b]
         response = requests.get(url, headers=header)
         html_soup = BeautifulSoup(response.text, 'html.parser')
-        first = html_soup.find_all('div', class_='Mb(25px)')
         fo = html_soup.find_all('p', class_='D(ib) W(47.727%) Pend(40px)')
         for i in fo:
             output["Country"].append(i.contents[4])
@@ -71,6 +60,8 @@ def youngestceo():
             output["Employees"].append(i.contents[10].get_text())
         response = requests.get(url, headers=header)
         soup = BeautifulSoup(response.content, 'lxml')
+        output["Code"].append(liststock[b])
+        output["Name"].append(listname[b])
         output["CEO"].append(soup.select('[class="Ta(start)"]')[0].get_text())
         output["Age"].append(soup.select('[class="Ta(end)"]')[2].get_text())
         out.append(output.copy())
@@ -88,25 +79,21 @@ def youngestceo():
         t.add_row(
             [str(i['Name']), str(i['Code']), str(i['Country']), str(i['Employees']), str(i['CEO']), str(i['Age'])])
     print(t)
+    return newout
 
 
 def bestchange():
-    url = 'https://finance.yahoo.com/most-active'
     header = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
     }
-    response = requests.get(url, headers=header)
-    soup = BeautifulSoup(response.content, 'lxml')
+
     liststock = []
     listname = []
-    for item in soup.select('.simpTblRow'):
-        liststock.append(item.select('[aria-label=Symbol]')[0].get_text())
-        listname.append(item.select('[aria-label=Name]')[0].get_text())
-
+    out = []
+    liststockname(liststock, listname, header)
     b = 0
     output = {"Code": [], "Name": [], "52-Week": [], "Total Cash": []}
-    out = []
-    # Name, Code, 52-Week Change, Total Cash
+
     while b <= (len(liststock) - 1):
         output["Code"].append(liststock[b])
         output["Name"].append(listname[b])
@@ -137,17 +124,12 @@ def bestchange():
 
 
 def blackrock():
-    url = 'https://finance.yahoo.com/most-active'
     header = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
     }
-    response = requests.get(url, headers=header)
-    soup = BeautifulSoup(response.content, 'lxml')
     liststock = []
     listname = []
-    for item in soup.select('.simpTblRow'):
-        liststock.append(item.select('[aria-label=Symbol]')[0].get_text())
-        listname.append(item.select('[aria-label=Name]')[0].get_text())
+    liststockname(liststock, listname, header)
     b = 0
     out = []
     output = {"Name": [], "Code": [], "Shares": [], "Date": [], "%": [], "Value": []}
@@ -177,7 +159,6 @@ def blackrock():
         value = (html_soup.select('[class="Ta(start) Pend(10px)"]')[
                      i - 1].nextSibling.nextSibling.nextSibling.nextSibling.get_text())
 
-        # Name, Code, Shares, Date Reported, % Out, Value.
         output["%"].append(procent)
         output["Shares"].append(shares)
         output["Date"].append(date)
@@ -198,9 +179,33 @@ def blackrock():
     print(t)
 
 
+def liststockname(liststock, listname, header):
+    url = 'https://finance.yahoo.com/most-active'
+
+    response = requests.get(url, headers=header)
+    soup = BeautifulSoup(response.content, 'lxml')
+    for item in soup.select('.simpTblRow'):
+        liststock.append(item.select('[aria-label=Symbol]')[0].get_text())
+        listname.append(item.select('[aria-label=Name]')[0].get_text())
+    return liststock, listname
+
+
+def test_liststockquantity():
+    liststock = []
+    listname = []
+    header = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'
+    }
+    liststockname(liststock, listname, header)
+    assert len(liststock) == 25
+
+
+def test_lenyoungestceo():
+    assert len(youngestceo()) == 5
+
 # 5 stocks with most youngest CEOs
-youngestceo()
+# youngestceo()
 # 10 stocks with best 52-Week Change
-bestchange()
+# bestchange()
 # 10 largest holds of Blackrock Inc.
-blackrock()
+# blackrock()
